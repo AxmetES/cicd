@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# venv
+.venv/
+venv/
+
+# pytest
+.pytest_cache/
+
+# ruff
+.ruff_cache/
+
+# env files
+.env
+
+# JetBrains IDE
+.idea/

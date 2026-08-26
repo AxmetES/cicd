@@ -59,3 +59,23 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ env.REPO_LC }}:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lowercase repository name
+        run: echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+            docker pull ghcr.io/${{ env.REPO_LC }}:latest
+            docker stop demo-app || true
+            docker rm demo-app || true
+            docker run -d -p 8000:8000 --name demo-app ghcr.io/${{ env.REPO_LC }}:latest

@@ -78,4 +78,4 @@ jobs:
             docker pull ghcr.io/${{ env.REPO_LC }}:latest
             docker stop demo-app || true
             docker rm demo-app || true
-            docker run -d -p 8000:8000 --name demo-app ghcr.io/${{ env.REPO_LC }}:latest
+            docker run -d -p 80:8000 --name demo-app ghcr.io/${{ env.REPO_LC }}:latest

@@ -3,3 +3,10 @@ uvicorn
 pytest
 httpx
 ruff
+pydantic-settings
+passlib
+bcrypt
+python-jose
+resend
+pytest-asyncio
+aiosqlite

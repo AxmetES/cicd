@@ -1,7 +1,8 @@
-from passlib.context import CryptContext
-from jose import jwt
-from datetime import datetime, timedelta, UTC
 import secrets
+from datetime import UTC, datetime, timedelta
+
+from jose import JWTError, jwt
+from passlib.context import CryptContext
 
 from app.config import settings
 
@@ -30,5 +31,5 @@ def decode_access_token(token: str) -> int | None:
     try:
         payload = jwt.decode(token, settings.JWT_SECRET, algorithms=["HS256"])
         return int(payload["sub"])
-    except Exception:
+    except JWTError:
         return None

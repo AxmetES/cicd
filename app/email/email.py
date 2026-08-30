@@ -1,6 +1,8 @@
 import smtplib
 from email.mime.text import MIMEText
+
 from app.config import settings
+
 
 def send_verification_email(to_email: str, token: str):
     verify_url = f"http://localhost:5174/verify/{token}"

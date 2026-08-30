@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.router import api_router
 from app.storage import ensure_public_bucket
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     ensure_public_bucket()

@@ -17,4 +17,4 @@ venv/
 .env
 
 # JetBrains IDE
-.idea/.env
+.idea

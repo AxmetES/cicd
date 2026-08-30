@@ -1,15 +1,16 @@
-import sys
 import os
+import sys
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool
+
 from alembic import context
 
 # добавляем корень проекта в путь, чтобы видеть app/
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from app.models.models import Base
 from app.config import settings
+from app.models.models import Base
 
 config = context.config
 

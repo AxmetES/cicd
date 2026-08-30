@@ -1,9 +1,9 @@
 import json
-
-from minio import Minio
-from app.config import settings
 import uuid
 
+from minio import Minio
+
+from app.config import settings
 from app.utils.image_utils import process_photo
 
 client = Minio(

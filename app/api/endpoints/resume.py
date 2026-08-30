@@ -1,25 +1,22 @@
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi import UploadFile, File
-
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.database import get_db
-from app.models.models import User, Resume, Experience, Education, Project
+from app.dependencies import get_current_user
+from app.models.models import Education, Experience, Project, Resume, User
 from app.schemas.resume_schemas import (
-    ResumeUpdate,
-    ResumeResponse,
-    ExperienceCreate,
-    ExperienceResponse,
     EducationCreate,
     EducationResponse,
+    ExperienceCreate,
+    ExperienceResponse,
     ProjectCreate,
     ProjectResponse,
+    ResumeResponse,
+    ResumeUpdate,
 )
-from app.dependencies import get_current_user
 from app.storage import upload_photo
-
 
 router = APIRouter(prefix="/api/resume", tags=["resume"])
 

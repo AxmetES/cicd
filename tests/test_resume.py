@@ -414,7 +414,7 @@ async def test_public_resume_no_auth_required(async_client, auth_headers):
 # ---- photo resume ----
 
 async def test_upload_photo(async_client, make_verified_user):
-    user, headers = await make_verified_user("photo-user@example.com")
+    _, headers = await make_verified_user("photo-user@example.com")
     await async_client.put("/api/resume/me", json=_resume_payload(slug="photo-user"), headers=headers)
 
     fake_photo = BytesIO(b"fake image bytes")

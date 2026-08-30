@@ -1,5 +1,6 @@
-from PIL import Image
 import io
+
+from PIL import Image
 
 
 def process_photo(file_data) -> bytes:

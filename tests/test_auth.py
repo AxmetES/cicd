@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from jose import jwt
 from sqlalchemy import select
@@ -157,7 +157,7 @@ async def test_me_with_expired_token(async_client, verified_user):
 
     expired_payload = {
         "sub": str(user.id),
-        "exp": datetime.utcnow() - timedelta(hours=1),
+        "exp": datetime.now(UTC) - timedelta(hours=1),
     }
     expired_token = jwt.encode(expired_payload, settings.JWT_SECRET, algorithm="HS256")
 

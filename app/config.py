@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     JWT_SECRET: str
     GMAIL_USER: str
     GMAIL_APP_PASSWORD: str
+    FRONTEND_URL: str
 
     MINIO_ENDPOINT: str
     MINIO_ACCESS_KEY: str

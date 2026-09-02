@@ -430,16 +430,22 @@ async def test_upload_photo(async_client, make_verified_user):
     assert response.json()["photo_url"] == "http://minio/test.jpg"
 
 
-async def test_upload_photo_without_resume(async_client, auth_headers):
+async def test_upload_photo_creates_resume_if_missing(async_client, auth_headers):
     fake_photo = BytesIO(b"fake image bytes")
 
-    response = await async_client.post(
-        "/api/resume/me/photo",
-        files={"file": ("photo.jpg", fake_photo, "image/jpeg")},
-        headers=auth_headers,
-    )
+    with patch("app.api.endpoints.resume.upload_photo", return_value="http://minio/auto.jpg"):
+        response = await async_client.post(
+            "/api/resume/me/photo",
+            files={"file": ("photo.jpg", fake_photo, "image/jpeg")},
+            headers=auth_headers,
+        )
 
-    assert response.status_code == 404
+    assert response.status_code == 200
+    assert response.json()["photo_url"] == "http://minio/auto.jpg"
+
+    resume_response = await async_client.get("/api/resume/me", headers=auth_headers)
+    assert resume_response.status_code == 200
+    assert resume_response.json()["photo_url"] == "http://minio/auto.jpg"
 
 
 async def test_update_resume_does_not_clear_photo(async_client, make_verified_user):

@@ -42,4 +42,4 @@ def upload_photo(file_data, content_type: str) -> str:
         content_type="image/jpeg",
     )
 
-    return f"http://{settings.MINIO_ENDPOINT}/{settings.MINIO_BUCKET}/{filename}"
+    return f"{settings.FRONTEND_URL}/photos/{filename}"

@@ -5,7 +5,7 @@ from app.config import settings
 
 
 def send_verification_email(to_email: str, token: str):
-    verify_url = f"http://localhost:5174/verify/{token}"
+    verify_url = f"{settings.FRONTEND_URL}/verify/{token}"
 
     msg = MIMEText(f"Подтверди регистрацию: {verify_url}", "html")
     msg["Subject"] = "Подтверди свой email"

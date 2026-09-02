@@ -56,7 +56,15 @@ async def upload_resume_photo(
     resume = result.scalar_one_or_none()
 
     if not resume:
-        raise HTTPException(status_code=404, detail="Create resume first")
+        resume = Resume(
+            user_id=current_user.id,
+            slug=f"user-{current_user.id}",
+            full_name="",
+            role="",
+            description="",
+        )
+        db.add(resume)
+        await db.flush()
 
     photo_url = upload_photo(file.file, file.content_type)
 

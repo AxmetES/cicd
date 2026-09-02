@@ -83,8 +83,9 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            cd /opt/resume-demo-compose
             docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-            docker pull ghcr.io/${{ env.REPO_LC }}:latest
-            docker stop demo-app || true
-            docker rm demo-app || true
-            docker run -d -p 8080:8000 --name demo-app ghcr.io/${{ env.REPO_LC }}:latest
+            docker compose pull backend
+            docker compose up -d backend
+            sleep 5
+            docker compose exec -T backend alembic upgrade head
